@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Titan+One&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Balap Jukung Matematika PLSV</title>
+
+<style>
+
+html,body{
+margin:0;
+padding:0;
+width:100%;
+min-height:100vh;
+font-family:Poppins,sans-serif;
+overflow-x:hidden;
+}
+
+body{
+background:linear-gradient(to bottom,#87CEEB 0%,#dff4ff 100%);
+background-repeat:no-repeat;
+background-attachment:fixed;
+background-size:cover;
+text-align:center;
+padding-bottom:60px;
+min-height:100vh;
+display:flex;
+flex-direction:column;
+}
+
+h1{
+margin-top:20px;
+color:black;
+}
+
+/* =======================
+   JUDUL GAME
+======================= */
+
+.gameTitle{
+
+font-family:'Titan One',sans-serif;
+
+font-size:72px;
+font-weight:400;
+
+text-align:center;
+
+line-height:.88;
+
+letter-spacing:2px;
+
+margin:20px 0;
+
+color:#0284C7;
+
+/* Outline putih tipis */
+-webkit-text-stroke:1.2px #ffffff;
+
+/* Bayangan seperti game */
+text-shadow:
+
+0 2px 0 rgba(255,255,255,.35),
+0 5px 0 #0b66d0,
+0 8px 14px rgba(0,0,0,.25);
+
+animation:titleFloat 2s ease-in-out infinite;
+
+}
+
+.gameTitle span{
+
+display:block;
+
+font-size:36px;
+
+margin-top:6px;
+
+letter-spacing:6px;
+
+color:#0284C7;
+
+-webkit-text-stroke:1px #ffffff;
+
+text-shadow:
+
+0 2px 0 rgba(255,255,255,.35),
+0 4px 0 #0b66d0,
+0 8px 12px rgba(0,0,0,.25);
+
+}
+
+.startTitle{
+
+margin-bottom:35px;
+
+font-size:72px;
+
+}
+
+.startTitle span{
+
+font-size:38px;
+
+letter-spacing:8px;
+
+}
+@keyframes titleFloat{
+
+0%,100%{
+transform:translateY(0px);
+}
+
+50%{
+transform:translateY(-6px);
+}
+
+}
+
+@media(max-width:768px){
+
+.gameTitle{
+
+font-size:42px;
+
+-webkit-text-stroke:2px white;
+
+}
+
+.gameTitle span{
+
+font-size:24px;
+letter-spacing:4px;
+
+}
+
+}
+
+
+.fullscreen-btn{
+position:fixed;
+top:10px;
+right:10px;
+padding:10px;
+border:none;
+border-radius:10px;
+background:#0284c7;
+color:white;
+cursor:pointer;
+z-index:1000;
+}
+
+.container{
+display:none;
+justify-content:center;
+align-items:center;
+gap:45px;   /* jarak antar panel dan arena */
+margin-top:20px;
+}
+
+.team{
+width:280px;
+background:white;
+border-radius:15px;
+padding:10px;
+box-shadow:0 4px 10px rgba(0,0,0,.2);
+}
+
+.timMerah{
+margin-left:20px;
+}
+
+.timBiru{
+margin-right:20px;
+}
+
+.header{
+padding:10px;
+color:white;
+font-weight:bold;
+border-radius:10px;
+}
+
+#gameWrapper{
+flex:1;
+display:flex;
+flex-direction:column;
+}
+
+footer{
+background:white;
+color:black;
+padding:8px;
+font-weight:500;
+position:fixed;
+bottom:0;
+width:100%;
+text-align:center;
+box-shadow:0 -4px 10px rgba(0,0,0,0.15);
+z-index:1000;
+}
+
+.merah{
+background:#dc2626;
+}
+
+.biru{
+background:#2563eb;
+}
+
+.display{
+width:90%;
+height:40px;
+font-size:22px;
+margin:10px;
+text-align:center;
+}
+
+.keypad{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:6px;
+}
+
+.key{
+padding:12px;
+background:#eee;
+border-radius:10px;
+cursor:pointer;
+}
+
+.go{
+background:#0284c7;
+color:white;
+}
+
+.clear{
+background:red;
+color:white;
+}
+
+.arena{
+width:700px;
+height:350px;
+position:relative;
+overflow:hidden;
+border-radius:20px;
+border:5px solid #0ea5e9;
+background-image:url("https://i.imgur.com/BYV2zmW.png");
+background-size:100% 100%;
+background-repeat:no-repeat;
+background-position:center;
+}
+
+.river{
+position:absolute;
+width:100%;
+height:100%;
+background:
+repeating-linear-gradient(
+90deg,
+#4fc3f7 0px,
+#6dd5fa 60px,
+#4fc3f7 120px
+);
+
+animation:air 3s linear infinite;
+}
+
+@keyframes air{
+from{
+background-position:0px;
+}
+
+to{
+background-position:300px;
+}
+}
+
+.startLine{
+position:absolute;
+left:70px;
+height:100%;
+width:6px;
+background:white;
+}
+
+.finishLine{
+position:absolute;
+right:50px;
+height:100%;
+width:20px;
+
+background:
+repeating-linear-gradient(
+white 0px,
+white 20px,
+black 20px,
+black 40px
+);
+}
+
+.track{
+position:absolute;
+width:100%;
+height:50%;
+border-bottom:2px dashed rgba(255,255,255,.7);
+}
+
+.track2{
+top:50%;
+}
+
+.boat{
+position:absolute;
+width:120px;
+transition:1s;
+}
+
+#boatMerah{
+top:170px;
+left:8px;
+}
+
+#boatBiru{
+top:230px;
+left:8px;
+}
+
+.start-screen{
+display:flex;
+height:90vh;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+}
+
+.start-btn{
+font-size:25px;
+padding:15px 40px;
+background:#0284c7;
+color:white;
+border:none;
+border-radius:15px;
+cursor:pointer;
+}
+
+.popup{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.7);
+justify-content:center;
+align-items:center;
+}
+
+.popup-content{
+background:white;
+padding:30px;
+border-radius:20px;
+}
+
+/* COUNTDOWN */
+#countdown{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100vw;
+height:100vh;
+
+/* samakan dengan background awal */
+background:linear-gradient(#87CEEB,#dff4ff);
+
+z-index:9999;
+font-size:25vw;
+font-weight:bold;
+color:#0f172a;
+justify-content:center;
+align-items:center;
+}
+
+/* Animasi angka */
+#countdown span{
+display:inline-block;
+animation:zoomIn 1s ease;
+}
+
+/* GO warna biru */
+.go-text{
+color:#2563eb;
+animation:zoomIn 1s ease;
+}
+
+/* efek zoom */
+@keyframes zoomIn{
+
+0%{
+transform:scale(.3);
+opacity:0;
+}
+
+50%{
+transform:scale(1.2);
+opacity:1;
+}
+
+100%{
+transform:scale(1);
+opacity:1;
+}
+
+}
+
+
+.river,
+.track,
+.startLine,
+.finishLine{
+display:none;
+}
+
+</style>
+</head>
+
+<body>
+<audio id="backsound" autoplay loop>
+  <source src="https://raw.githubusercontent.com/dilan-math/plsv/master/Backsound%20Game.mp3" type="audio/mpeg">
+</audio>
+<div id="gameWrapper">
+<button class="fullscreen-btn"
+onclick="toggleFullscreen()">
+⛶
+</button>
+
+<div id="countdown"></div>
+
+<div class="start-screen"
+id="startScreen">
+
+<h1 class="gameTitle startTitle">
+
+BALAP JUKUNG
+
+
+</h1>
+
+<button class="start-btn"
+onclick="startGame()">
+BATTLE START
+</button>
+
+</div>
+
+<h1 id="judulGame" class="gameTitle" style="display:none;">
+BALAP JUKUNG
+<span>PLSV</span>
+</h1>
+
+<div class="container"
+id="gameContainer">
+
+<!-- MERAH -->
+
+<div class="team timMerah">
+
+<div class="header merah"
+id="soalMerah">
+...
+</div>
+
+<input
+id="displayMerah"
+class="display"
+readonly>
+
+<div class="keypad">
+
+<div class="key" onclick="addNum('merah',1)">1</div>
+<div class="key" onclick="addNum('merah',2)">2</div>
+<div class="key" onclick="addNum('merah',3)">3</div>
+
+<div class="key" onclick="addNum('merah',4)">4</div>
+<div class="key" onclick="addNum('merah',5)">5</div>
+<div class="key" onclick="addNum('merah',6)">6</div>
+
+<div class="key" onclick="addNum('merah',7)">7</div>
+<div class="key" onclick="addNum('merah',8)">8</div>
+<div class="key" onclick="addNum('merah',9)">9</div>
+
+<div class="key" onclick="prevSoal('merah')"><</div>
+<div class="key" onclick="addNum('merah',0)">0</div>
+<div class="key" onclick="nextSoal('merah')">></div>
+
+<div class="key clear" onclick="clearDisplay('merah')">
+C
+</div>
+
+<div class="key"
+onclick="addMinus('merah')">
+-
+</div>
+
+<div class="key go"
+onclick="cek('merah')">
+OK
+</div>
+
+</div>
+</div>
+
+
+<!-- ARENA -->
+
+<div class="arena">
+
+<div class="river"></div>
+
+<div class="track"></div>
+<div class="track track2"></div>
+
+<div class="startLine"></div>
+<div class="finishLine"></div>
+
+<img
+src="https://i.imgur.com/ZCXQiFi.png"
+id="boatMerah"
+class="boat">
+
+<img
+src="https://i.imgur.com/X8e14tM.png"
+id="boatBiru"
+class="boat">
+
+</div>
+
+
+<!-- BIRU -->
+
+<div class="team timBiru">
+
+<div class="header biru"
+id="soalBiru">
+...
+</div>
+
+<input
+id="displayBiru"
+class="display"
+readonly>
+
+<div class="keypad">
+
+<div class="key" onclick="addNum('biru',1)">1</div>
+<div class="key" onclick="addNum('biru',2)">2</div>
+<div class="key" onclick="addNum('biru',3)">3</div>
+
+<div class="key" onclick="addNum('biru',4)">4</div>
+<div class="key" onclick="addNum('biru',5)">5</div>
+<div class="key" onclick="addNum('biru',6)">6</div>
+
+<div class="key" onclick="addNum('biru',7)">7</div>
+<div class="key" onclick="addNum('biru',8)">8</div>
+<div class="key" onclick="addNum('biru',9)">9</div>
+
+<div class="key" onclick="prevSoal('biru')"><</div>
+
+<div class="key" onclick="addNum('biru',0)">
+0
+</div>
+
+<div class="key" onclick="nextSoal('biru')">></div>
+
+<div class="key clear"
+onclick="clearDisplay('biru')">
+C
+</div>
+
+<div class="key"
+onclick="addMinus('biru')">
+-
+</div>
+
+<div class="key go"
+onclick="cek('biru')">
+OK
+</div>
+
+</div>
+
+</div>
+</div>
+
+<div class="popup"
+id="popup">
+
+<div class="popup-content">
+
+<h2 id="winner"></h2>
+
+<button onclick="mainLagi()">
+Main Lagi
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+const backsound = document.getElementById("backsound");
+
+document.addEventListener("click", function mulaiMusik(){
+    backsound.volume = 0.3;
+    backsound.play();
+    document.removeEventListener("click", mulaiMusik);
+});
+
+const soal=[
+{soal:"x - 3 = 9", jawaban:12},
+{soal:"2x + 5 = 13", jawaban:4},
+{soal:"x - 8 = 5", jawaban:13},
+{soal:"2x - 2 = 6", jawaban:4},
+{soal:"6x - 3 = 4x + 7", jawaban:5},
+{soal:"3x = 15", jawaban:5},
+{soal:"x + 12 = -3", jawaban:-15},
+{soal:"x + 5 = 20", jawaban:15},
+{soal:"x - 7 = 4", jawaban:11},
+{soal:"10 - x = 4", jawaban:6},
+{soal:"x - 4 = 9", jawaban:13},
+{soal:"19 - x = 11", jawaban:8},
+{soal:"x - 7 = -3", jawaban:4},
+{soal:"x + 9 = -2", jawaban:-11},
+{soal:"5x = 20", jawaban:4},
+{soal:"5x - 6 = 3x + 8", jawaban:7},
+{soal:"x - 3 = 16", jawaban:19},
+{soal:"x + 2 = 5", jawaban:3},
+{soal:"8 - x = 5", jawaban:3},
+{soal:"2x + 7 = 15", jawaban:4},
+{soal:"4x - 2 = 10", jawaban:3},
+{soal:"9x = 45", jawaban:5},
+{soal:"x - 4 = 1", jawaban:5},
+{soal:"2x = 8", jawaban:4},
+{soal:"15 - x = 2", jawaban:13},
+{soal:"3x = 9", jawaban:3},
+{soal:"5x - 3 = 17", jawaban:4},
+{soal:"2x + 3 = 7", jawaban:2},
+{soal:"x - 5 = 11", jawaban:16},
+{soal:"x - 2 = -7", jawaban:-5},
+
+{soal:"x - 4 = 8", jawaban:12},
+{soal:"2x + 4 = 12", jawaban:4},
+{soal:"x - 6 = 3", jawaban:9},
+{soal:"2x = 10", jawaban:5},
+{soal:"7x - 5 = 3x + 7", jawaban:3},
+{soal:"3x = 18", jawaban:6},
+{soal:"x + 10 = -5", jawaban:-15},
+{soal:"x + 6 = 22", jawaban:16},
+{soal:"x - 9 = 2", jawaban:11},
+{soal:"12 - x = 5", jawaban:7},
+{soal:"x - 5 = 11", jawaban:16},
+{soal:"17 - x = 8", jawaban:9},
+{soal:"x - 9 = -5", jawaban:4},
+{soal:"x + 7 = -4", jawaban:-11},
+{soal:"4x = 16", jawaban:4},
+{soal:"6x - 8 = 2x + 4", jawaban:3},
+{soal:"x - 2 = 15", jawaban:17},
+{soal:"x + 3 = 7", jawaban:4},
+{soal:"10 - x = 6", jawaban:4},
+{soal:"3x + 5 = 14", jawaban:3},
+
+{soal:"5x - 3 = 12", jawaban:3},
+{soal:"8x = 56", jawaban:7},
+{soal:"x - 6 = 2", jawaban:8},
+{soal:"2x = 12", jawaban:6},
+{soal:"14 - x = 3", jawaban:11},
+{soal:"4x = 16", jawaban:4},
+{soal:"6x - 5 = 19", jawaban:4},
+{soal:"2x + 4 = 10", jawaban:3},
+{soal:"x - 3 = 9", jawaban:12},
+{soal:"x - 1 = -6", jawaban:-5},
+
+{soal:"x - 6 = 10", jawaban:16},
+{soal:"2x + 3 = 11", jawaban:4},
+{soal:"x - 5 = 9", jawaban:14},
+{soal:"3x = 12", jawaban:4},
+{soal:"5x - 7 = 3x + 9", jawaban:8},
+{soal:"4x = 20", jawaban:5},
+{soal:"x + 8 = -4", jawaban:-12},
+{soal:"x + 7 = 19", jawaban:12},
+{soal:"x - 10 = 1", jawaban:11},
+{soal:"11 - x = 3", jawaban:8},
+
+{soal:"x - 4 = -6", jawaban:-2},
+{soal:"x + 5 = -3", jawaban:-8},
+{soal:"7x = 28", jawaban:4},
+{soal:"5x - 9 = 3x + 5", jawaban:7},
+{soal:"x - 1 = 14", jawaban:15},
+{soal:"x + 4 = 6", jawaban:2},
+{soal:"9 - x = 2", jawaban:7},
+{soal:"4x + 6 = 18", jawaban:3},
+{soal:"3x - 5 = 10", jawaban:5},
+{soal:"6x = 30", jawaban:5},
+
+{soal:"2x = 14", jawaban:7},
+{soal:"13 - x = 1", jawaban:12},
+{soal:"5x = 25", jawaban:5},
+{soal:"4x - 7 = 9", jawaban:4},
+{soal:"2x + 8 = 12", jawaban:2},
+{soal:"x - 2 = 8", jawaban:10},
+{soal:"x - 3 = -9", jawaban:-6},
+{soal:"x - 5 = 7", jawaban:12},
+{soal:"2x + 6 = 10", jawaban:2},
+
+{soal:"x - 5 = 7", jawaban:12},
+{soal:"2x + 6 = 14", jawaban:4},
+{soal:"x - 9 = 6", jawaban:15},
+{soal:"3x = 9", jawaban:3},
+{soal:"6x - 8 = 2x + 4", jawaban:3},
+{soal:"4x = 16", jawaban:4},
+{soal:"x + 11 = -2", jawaban:-13},
+{soal:"x + 4 = 18", jawaban:14},
+{soal:"x - 12 = 3", jawaban:15},
+{soal:"14 - x = 9", jawaban:5},
+
+{soal:"x - 7 = 8", jawaban:15},
+{soal:"20 - x = 13", jawaban:7},
+{soal:"x - 6 = -2", jawaban:4},
+{soal:"x + 8 = -5", jawaban:-13},
+{soal:"5x = 25", jawaban:5},
+{soal:"7x - 10 = 3x + 6", jawaban:4},
+{soal:"x - 4 = 12", jawaban:16},
+{soal:"x + 5 = 9", jawaban:4},
+{soal:"11 - x = 4", jawaban:7},
+{soal:"3x + 9 = 21", jawaban:4},
+
+{soal:"4x - 6 = 14", jawaban:5},
+{soal:"9x = 54", jawaban:6},
+{soal:"x - 8 = 5", jawaban:13},
+{soal:"2x = 10", jawaban:5},
+{soal:"16 - x = 5", jawaban:11},
+{soal:"3x = 6", jawaban:2},
+{soal:"5x - 4 = 16", jawaban:4},
+{soal:"2x + 5 = 11", jawaban:3},
+{soal:"x - 3 = 10", jawaban:13},
+{soal:"x - 1 = -4", jawaban:-3}
+];
+
+let merah=0;
+let biru=0;
+
+let indexMerah=0;
+let indexBiru=1;
+
+function generate(){
+
+indexMerah=
+Math.floor(
+Math.random()*soal.length
+);
+
+indexBiru=
+Math.floor(
+Math.random()*soal.length
+);
+
+soalMerah.innerHTML=
+soal[indexMerah].soal;
+
+soalBiru.innerHTML=
+soal[indexBiru].soal;
+
+}
+
+function addNum(t,n){
+
+document.getElementById(
+"display"+
+huruf(t)
+).value+=n;
+
+}
+
+function clearDisplay(t){
+
+document.getElementById(
+"display"+
+huruf(t)
+).value="";
+
+}
+
+function clearDisplay(t){
+
+document.getElementById(
+"display"+
+huruf(t)
+).value="";
+
+}
+
+
+/* tombol minus */
+function addMinus(team){
+
+let display=
+document.getElementById(
+"display"+huruf(team)
+);
+
+if(
+display.value.indexOf("-")==-1
+){
+display.value=
+"-"+display.value;
+}
+
+}
+
+
+/* tombol soal berikutnya */
+function nextSoal(team){
+
+if(team=="merah"){
+
+indexMerah++;
+
+if(indexMerah>=soal.length){
+
+indexMerah=0;
+
+}
+
+document.getElementById(
+"soalMerah"
+).innerHTML=
+soal[indexMerah].soal;
+
+}
+
+else{
+
+indexBiru++;
+
+if(indexBiru>=soal.length){
+
+indexBiru=0;
+
+}
+
+document.getElementById(
+"soalBiru"
+).innerHTML=
+soal[indexBiru].soal;
+
+}
+
+}
+
+
+/* tombol soal sebelumnya */
+function prevSoal(team){
+
+if(team=="merah"){
+
+indexMerah--;
+
+if(indexMerah<0){
+
+indexMerah=
+soal.length-1;
+
+}
+
+document.getElementById(
+"soalMerah"
+).innerHTML=
+soal[indexMerah].soal;
+
+}
+
+else{
+
+indexBiru--;
+
+if(indexBiru<0){
+
+indexBiru=
+soal.length-1;
+
+}
+
+document.getElementById(
+"soalBiru"
+).innerHTML=
+soal[indexBiru].soal;
+
+}
+
+}
+
+function cek(team){
+
+let display=
+document.getElementById(
+"display"+
+huruf(team)
+);
+
+let nilai=
+Number(display.value);
+
+if(
+team=="merah" &&
+nilai==
+soal[indexMerah].jawaban
+){
+
+merah++;
+
+moveBoat(
+"boatMerah",
+merah
+);
+
+/* hanya ganti soal merah */
+nextSoal("merah");
+
+}
+
+if(
+team=="biru" &&
+nilai==
+soal[indexBiru].jawaban
+){
+
+biru++;
+
+moveBoat(
+"boatBiru",
+biru
+);
+
+/* hanya ganti soal biru */
+nextSoal("biru");
+
+}
+
+display.value="";
+
+if(merah>=5){
+
+menang(
+"Tim Merah Menang!"
+);
+
+}
+
+if(biru>=5){
+
+menang(
+"Tim Biru Menang!"
+);
+
+}
+
+}
+
+function moveBoat(id,langkah){
+
+const startX=40;
+const finishX=420;
+const maxBenar=5;
+
+let posisi=
+startX+((finishX-startX)*langkah/maxBenar);
+
+document.getElementById(
+id
+).style.left=
+posisi+"px";
+
+}
+
+function menang(teks){
+
+winner.innerHTML=teks;
+
+popup.style.display=
+"flex";
+
+}
+
+function mainLagi(){
+
+/* reset skor */
+merah=0;
+biru=0;
+
+/* reset posisi jukung */
+document.getElementById(
+"boatMerah"
+).style.left="65px";
+
+document.getElementById(
+"boatBiru"
+).style.left="65px";
+
+/* kosongkan jawaban */
+document.getElementById(
+"displayMerah"
+).value="";
+
+document.getElementById(
+"displayBiru"
+).value="";
+
+/* tutup popup */
+popup.style.display=
+"none";
+
+/* kembali ke menu awal */
+gameContainer.style.display=
+"none";
+
+judulGame.style.display=
+"none";
+
+startScreen.style.display=
+"flex";
+
+}
+
+function huruf(t){
+
+return t.charAt(0)
+.toUpperCase()
++t.slice(1);
+
+}
+
+function toggleFullscreen(){
+
+if(!document.fullscreenElement){
+
+document.documentElement.requestFullscreen();
+
+}
+
+else{
+
+document.exitFullscreen();
+
+}
+
+}
+
+function startGame(){
+
+let countdownNumber=3;
+
+const countdownDiv=
+document.getElementById(
+"countdown"
+);
+
+countdownDiv.style.display=
+"flex";
+
+countdownDiv.innerHTML=
+`<span>${countdownNumber}</span>`;
+
+const interval=
+setInterval(()=>{
+
+countdownNumber--;
+
+if(countdownNumber>0){
+
+countdownDiv.innerHTML=
+`<span>${countdownNumber}</span>`;
+
+}
+
+else if(
+countdownNumber===0
+){
+
+countdownDiv.innerHTML=
+`<span class="go-text">GO!</span>`;
+
+}
+
+else{
+
+clearInterval(
+interval
+);
+
+countdownDiv.style.display=
+"none";
+
+startScreen.style.display=
+"none";
+
+judulGame.style.display=
+"block";
+
+gameContainer.style.display=
+"flex";
+
+generate();
+
+}
+
+},1000);
+
+}
+
+</script>
+<footer>
+Pembuat: Ahmad Fauzi, S.Pd. - Guru Matematika SMPN 15 Banjarbaru
+</footer>
+</body>
+</html>
